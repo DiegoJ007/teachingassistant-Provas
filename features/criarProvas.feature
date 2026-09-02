@@ -26,4 +26,14 @@ Scenario: Professor busca por questões de um assunto
     And eu vejo o campo "questões do assunto" vazio
     When eu coloco a palavra "requisitos" no campo "assunto"
     Then eu vejo o campo "assunto" com a palavra "requisitos"
+    And eu vejo o campo "questões do assunto" com uma lista de questões sobre "requisitos" 
+
+Scenario: Professor busca por questões de outro assunto
+    Given eu estou logado como "professor"
+    And eu estou na página "criação de provas"
+    And eu vejo o campo de texto "assunto" com a palavra "requisitos"
     And eu vejo o campo "questões do assunto" com uma lista de questões sobre "requisitos"
+    When eu substituo a palavra "requisitos" por "gerência de configuração"
+    Then eu vejo o campo "assunto" com a palavra "gerência de configuração"
+    And eu vejo o campo "questões do assunto" com uma lista de questões sobre "gerência de configuração"
+
