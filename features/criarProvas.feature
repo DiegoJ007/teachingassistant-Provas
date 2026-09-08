@@ -36,4 +36,4 @@ Scenario: Professor busca por questões de outro assunto
     When eu substituo a palavra "requisitos" por "gerência de configuração"
     Then eu vejo o campo "assunto" com a palavra "gerência de configuração"
     And eu vejo o campo "questões do assunto" com uma lista de questões sobre "gerência de configuração"
-
+    And eu estou na página "criação de provas"
