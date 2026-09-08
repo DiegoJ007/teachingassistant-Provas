@@ -47,4 +47,11 @@ Scenario: Professor busca por questões de outro assunto
     Then eu vejo o campo "assunto" com a palavra "gerência de configuração"
     And eu vejo o campo "questões do assunto" com uma lista de questões sobre "gerência de configuração"
 
-Scenario: Professor 
+Scenario: Professor seleciona uma questão para a prova
+    Given eu estou logado como "professor"
+    And eu estou na página "criação de provas"
+    And eu vejo o campo "criação de prova em andamento"
+    And eu vejo o campo de texto "assunto" com a palavra "requisitos"
+    And eu vejo o campo "questões do assunto" com uma lista de questões sobre "requisitos"
+    When eu seleciono uma questão de número "1" na lista de questões sobre o assunto "requisitos"
+    Then eu vejo a lista "questões selecionadas" com a questão número "1" do assunto "requisitos" adicionada
