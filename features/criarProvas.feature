@@ -12,9 +12,17 @@ Feature: Geração de provas
 
 Scenarios
 
+Scenario: Professor inicia o processo de criar prova
+    Given eu estou logado como "professor"
+    And eu estou na página "criação de provas"
+    And eu vejo a opção "criar prova"
+    When eu seleciono a opção "criar prova"
+    Then eu vejo o campo "criação de prova em andamento"
+
 Scenario: Professor inicia a seleção de questões
     Given eu estou logado como "professor"
     And eu estou na página "criação de provas"
+    And eu vejo o campo "criação de prova em andamento"
     When eu seleciono a opção "selecionar de questões"
     Then eu vejo o campo de texto "assunto" vazio
     And eu vejo o campo "questões do assunto" vazio
@@ -22,6 +30,7 @@ Scenario: Professor inicia a seleção de questões
 Scenario: Professor busca por questões de um assunto
     Given eu estou logado como "professor"
     And eu estou na página "criação de provas"
+    And eu vejo o campo "criação de prova em andamento"
     And eu vejo o campo de texto "assunto" vazio
     And eu vejo o campo "questões do assunto" vazio
     When eu coloco a palavra "requisitos" no campo "assunto"
@@ -31,9 +40,19 @@ Scenario: Professor busca por questões de um assunto
 Scenario: Professor busca por questões de outro assunto
     Given eu estou logado como "professor"
     And eu estou na página "criação de provas"
+    And eu vejo o campo "criação de prova em andamento"
     And eu vejo o campo de texto "assunto" com a palavra "requisitos"
     And eu vejo o campo "questões do assunto" com uma lista de questões sobre "requisitos"
     When eu substituo a palavra "requisitos" por "gerência de configuração"
     Then eu vejo o campo "assunto" com a palavra "gerência de configuração"
     And eu vejo o campo "questões do assunto" com uma lista de questões sobre "gerência de configuração"
     And eu estou na página "criação de provas"
+
+Scenario: Professor seleciona uma questão para a prova
+    Given eu estou logado como "professor"
+    And eu estou na página "criação de provas"
+    And eu vejo o campo "criação de prova em andamento"
+    And eu vejo o campo de texto "assunto" com a palavra "requisitos"
+    And eu vejo o campo "questões do assunto" com uma lista de questões sobre "requisitos"
+    When eu seleciono uma questão de número "1" na lista de questões sobre o assunto "requisitos"
+    Then eu vejo a lista "questões selecionadas" com a questão número "1" do assunto "requisitos" adicionada
