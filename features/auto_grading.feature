@@ -20,4 +20,5 @@ And eu estou na página de notas da turma "Engenharia de Software e Sistemas 202
 And não há gabarito cadastrado para a prova de "Engenharia de Requisitos"
 When eu tocar no botão de correção automática
 Then aparecerá uma mensagem de erro informando que é necessário cadastrar o gabarito antes de corrigir
-And nenhuma nota será atualizadaaaaa
+And nenhuma nota será atualizada
+And aparecerá um identificador nas questões sem gabarito
