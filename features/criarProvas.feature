@@ -56,3 +56,23 @@ Scenario: Professor seleciona uma questão para a prova
     And eu vejo o campo "questões do assunto" com uma lista de questões sobre "requisitos"
     When eu seleciono uma questão de número "1" na lista de questões sobre o assunto "requisitos"
     Then eu vejo a lista "questões selecionadas" com a questão número "1" do assunto "requisitos" adicionada
+
+Scenario: Professor finaliza seleção de questões para a prova
+    Given eu estou logado como "professor"
+    And eu estou na página "criação de provas"
+    And eu vejo o campo "criação de prova em andamento"
+    And eu vejo a lista "questões selecionadas" com algumas questões
+    When eu seleciono a opção finalizar seleção de questões
+    Then eu vejo todas as questões selecionadas no campo "questões selecionadas"
+    And eu vejo a opção "configurar dados da aplicação da prova"
+    And eu estou na página de criação de provas
+
+Scenario: Professor inicia a configuração os dados de aplicação da prova
+    Given eu estou logado como "professor"
+    And eu estou na página "criação de provas"
+    And eu vejo o campo "configurar dados da aplicação da prova"
+    When eu seleciono a opção "configurar dados da aplicação"
+    Then eu vejo o campo "nome da avaliação"
+    And eu vejo o campo "data da avaliação"
+    And eu vejo o campo "selecionar quantidade de alunos"
+    And eu estou na página "criação de provas"
