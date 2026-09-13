@@ -72,7 +72,18 @@ Scenario: Professor inicia a configuração os dados de aplicação da prova
     And eu estou na página "criação de provas"
     And eu vejo o campo "configurar dados da aplicação da prova"
     When eu seleciono a opção "configurar dados de aplicação"
-    And eu vejo o campo "tipo da avaliação"
-    And eu vejo o campo "data da avaliação"
-    And eu vejo o campo "selecionar quantidade de alunos"
+    Then eu vejo a mensagem "etapa de configuração em andamento"
+
+Scenario: Professor configura os dados de aplicação
+    Given eu estou logado como "professor"
     And eu estou na página "criação de provas"
+    And eu vejo a mensagem "etapa de configuração em andamento"
+    And eu vejo o campo "tipo da avaliação" vazio
+    And eu vejo o campo "data da avaliação" vazio
+    And eu vejo o campo "quantidade de alunos" vazio
+    When eu preencho o campo "tipo de avaliação" com "bimestral"
+    And eu preencho o campo "data da avaliação" com "29/09/2026"
+    And eu preencho o campo "quantidade de alunos" com "38"
+    Then eu vejo o campo "tipo da avaliação" com valor "bimestral"
+    And eu vejo o campo "data da avaliação" com valor "29/09/2026"
+    And eu vejo o campo "quantidade de alunos" com valor "38"
