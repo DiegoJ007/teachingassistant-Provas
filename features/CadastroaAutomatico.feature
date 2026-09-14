@@ -48,9 +48,9 @@ Then eu vejo a questão número "2"
 Scenario: Aluno retorna para uma questão anterior
 Given eu estou logado como "aluno"
 And eu estou na página "prova em andamento"
-And eu vejo a questão número "2"
+And eu vejo a questão número "11"
 When eu seleciono a opção "questão anterior"
-Then eu vejo a questão número "1"
+Then eu vejo a questão número "10"
 And eu vejo a resposta anteriormente selecionada para a questão número "1"
 
 Scenario: Aluno deixa uma questão sem resposta
