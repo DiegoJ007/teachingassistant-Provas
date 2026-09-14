@@ -84,4 +84,4 @@ And eu estou na página "prova em andamento"
 And eu vejo uma ou mais questões sem resposta
 When eu seleciono a opção "confirmar envio"
 Then eu vejo a mensagem "prova enviada com sucesso"
-And as questões sem resposta são registradas como incorretas para a correção
+Then as questões sem resposta são registradas como incorretas para a correção
