@@ -17,8 +17,8 @@ Then eu vejo a página "prova em andamento"
 Scenario: Aluno visualiza uma questão da prova
 Given eu estou logado como "aluno"
 And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
-Then eu vejo o enunciado da questão número "1"
+And eu vejo a questão número "12"
+Then eu vejo o enunciado da questão número "12"
 And eu vejo as alternativas disponíveis para a questão
 
 Scenario: Aluno seleciona uma alternativa
