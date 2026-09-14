@@ -56,11 +56,11 @@ And eu vejo a resposta anteriormente selecionada para a questão número "1"
 Scenario: Aluno deixa uma questão sem resposta
 Given eu estou logado como "aluno"
 And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
+And eu vejo a questão número "11"
 And nenhuma alternativa está selecionada
 When eu seleciono a opção "próxima questão"
-Then eu vejo a questão número "2"
-And a questão número "1" permanece sem resposta
+Then eu vejo a questão número "12"
+And a questão número "11" permanece sem resposta
 
 Scenario: Aluno finaliza a prova
 Given eu estou logado como "aluno"
