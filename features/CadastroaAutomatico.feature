@@ -84,13 +84,14 @@ And eu estou na página "prova em andamento"
 And eu vejo uma ou mais questões sem resposta
 When eu seleciono a opção "confirmar envio"
 Then eu vejo a mensagem "prova enviada com sucesso"
-And as questões sem resposta são registradas como incorretas para a correção
+Then as questões sem resposta são registradas como incorretas para a correção
 
-Scenario: Aluno altera uma resposta já registrada
+Scenario: Sistema mantém respostas de diferentes questões separadas
 Given eu estou logado como "aluno"
 And eu estou na página "prova em andamento"
-And eu vejo a questão número "4"
-And eu vejo a alternativa "C" selecionada
-When eu seleciono a alternativa "D"
-Then eu vejo a alternativa "D" selecionada
-And eu vejo a alternativa "C" não selecionada
+And eu vejo a questão número "1"
+When eu seleciono a alternativa "A"
+And eu navego para a questão número "2"
+And eu seleciono a alternativa "C"
+Then eu vejo a alternativa "A" registrada para a questão número "1"
+And eu vejo a alternativa "C" registrada para a questão número "2"
