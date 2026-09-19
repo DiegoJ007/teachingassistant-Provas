@@ -25,24 +25,24 @@ Scenario Outline: Professor tenta corrigir notas com planilha de gabarito malfor
     And eu enviei uma planilha de gabaritos com o problema "<problema>"
     And eu enviei a planilha de respostas com a formatação correta
     When eu tocar no botão de correção automática
-    Then aparecerá a mensagem de erro
+    Then aparecerá a mensagem de formato inválido
     And nenhuma nota será cadastrada para a turma
 
     Examples:
-        | problema                           |
-        | coluna de número da prova ausente  |
+        | problema                           | 
+        | coluna de número da prova ausente  | 
         | extensão de arquivo inválida (.txt)|
         | gabarito com questão vazia         |
 
 @gui
-Scenario: Professor tenta corrigir as notas de uma turma com a planilha de respostas possuindo formatação errada
+Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha de respostas possuindo formatação errada
     Given que eu sou o professor "Paulo"
     And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
     And as respostas são "3", "9" e "15" para as questões da prova 01
     And eu enviei a planilha com os gabaritos com a formatação correta
     And eu enviei a planilha de respostas com o "<problema>"
     When eu tocar no botão de correção automática
-    Then aparecerá uma mensagem de erro informando que a planilha de respostas está em formato inválido
+    Then aparecerá uma mensagem de formato inválido
     And nenhuma nota será cadastrada para a turma
 
     Examples:
@@ -52,10 +52,11 @@ Scenario: Professor tenta corrigir as notas de uma turma com a planilha de respo
         | questão 3 faltando (numero de colunas invalido)        |
 
 @gui
-Scenario: Professor corrige notas de uma turma e um aluno preenche uma resposta inválida
+Scenario Outline: Professor corrige notas de uma turma e um aluno preenche uma resposta inválida
     Given que eu sou o professor "Paulo"
     And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
     And as respostas são "3", "9" e "15" para as questões da prova 01
+    And cada questão tem 5 alternativas
     And o aluno "João" marcou a prova 01 com as respostas "3", "B" e "40"
     And eu enviei a planilha com os gabaritos com a formatação correta
     And eu enviei a planilha de respostas com a formatação correta
@@ -63,4 +64,3 @@ Scenario: Professor corrige notas de uma turma e um aluno preenche uma resposta 
     Then aparecerá uma mensagem informando que as notas foram cadastradas com alertas de respostas inválidas
     And a nota do aluno "João" constará como 33%
     And o sistema indicará que as questões 2 e 3 do aluno "João" possuem respostas inválidas
-
