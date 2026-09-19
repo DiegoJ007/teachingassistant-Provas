@@ -63,3 +63,4 @@ Scenario: Professor corrige notas de uma turma e um aluno preenche uma resposta 
     Then aparecerá uma mensagem informando que as notas foram cadastradas com alertas de respostas inválidas
     And a nota do aluno "João" constará como 33%
     And o sistema indicará que as questões 2 e 3 do aluno "João" possuem respostas inválidas
+
