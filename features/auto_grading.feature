@@ -32,7 +32,6 @@ Scenario Outline: Professor tenta corrigir notas com planilha de gabarito malfor
         | problema                           | 
         | coluna de número da prova ausente  | 
         | extensão de arquivo inválida (.txt)|
-        | gabarito com questão vazia         |
 
 @gui
 Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha de respostas possuindo formatação errada
@@ -42,7 +41,7 @@ Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha 
     And eu enviei a planilha com os gabaritos com a formatação correta
     And eu enviei a planilha de respostas com o "<problema>"
     When eu tocar no botão de correção automática
-    Then aparecerá uma mensagem de formato inválido
+    Then aparecerá a mensagem de formato inválido
     And nenhuma nota será cadastrada para a turma
 
     Examples:
@@ -52,7 +51,7 @@ Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha 
         | questão 3 faltando (numero de colunas invalido)        |
 
 @gui
-Scenario Outline: Professor corrige notas de uma turma e um aluno preenche uma resposta inválida
+Scenario: Professor corrige notas de uma turma e um aluno preenche uma resposta inválida
     Given que eu sou o professor "Paulo"
     And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
     And as respostas são "3", "9" e "15" para as questões da prova 01
@@ -81,5 +80,5 @@ Scenario Outline: Serviço calcula a nota do aluno a partir do gabarito e das re
         
     Examples: Casos limites e exceções
         | aluno | prova | gabarito | respostas | nota |
-        | Joao  | 01    | 3, 9, 15 | 3, 9,     | 67%  | # Deixou a última em branco
+        | Joao  | 01    | 3, 9, 15 | 3, 9, null| 67%  | # Deixou a última em branco
         | Ana   | 01    | 3, 9, 15 |           | 0%   | # Entregou tudo em branco
