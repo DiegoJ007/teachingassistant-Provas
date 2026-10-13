@@ -1,0 +1,9 @@
+Será para um aluno específico? As provas serão geradas com ordem aleatória das questões, mas serão as mesmas questões.
+O número de questões é escolhido pelo professor? Existe um número mínimo e máximo de questões? Sim, não existe limite máximo, mas o mínimo é 1.
+O professor poderá selecionar ou escolher questões aleatórias?  O professor seleciona as questões de acordo com a busca pelo assunto da questão.
+Haverá uma divisão de escolhas para questões abertas ou fechadas? Por enquanto só questões fechadas.
+Para buscar uma questão no sistema, será preciso colocar o ID da questão, ou pode-se usar um sistema de busca para pegar as questões que têm palavras associadas à busca? Nenhuma das duas opções.
+As questões podem ser selecionadas por nível de dificuldade? Não.
+Poderei colocar requisitos do tipo “quero tantas questões fáceis de tal assuntos, outras tantas fáceis de outro assunto, quero uma difícil de tal assunto, uma média de tal assunto, posso  querer definir uma ou mais questões fixas à minha escolha para todas as provas”? Não
+A prova gerada para os alunos deve ter a ordem das questões embaralhada, mas com as mesmas questões? Sim
+Vou ter um histórico das provas geradas anteriormente, para que eu possa apenas copiar o comando (gerar uma nova prova com os mesmos requisitos de uma antiga) ou a prova inteira? Sim
