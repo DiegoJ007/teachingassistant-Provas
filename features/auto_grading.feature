@@ -57,7 +57,7 @@ Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha 
 
     Examples:
         | problema                                         |
-        | Número de prova que não existe                   |
+        | Número de prova que não existe no gabarito       |
         | extensão de arquivo inválida (.txt)              |
         | questão 3 faltando (numero de colunas invalido)  |
         | coluna de identificador do aluno ausente         |
