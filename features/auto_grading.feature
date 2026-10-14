@@ -10,30 +10,33 @@ So that todas as notas possam ser entregues de forma eficiente e segura
 # - Resposta válida: inteiro entre 0 e 2^n - 1 (com 5 alternativas, de 0 a 31).
 # - Reexecutar a correção sobrescreve as notas existentes.
 
+Background:
+    Given todas as provas têm 5 alternativas
+    And a planilha de gabarito tem as colunas "número da prova", "questão 1", "questão 2" e assim por diante
+    And a planilha de respostas do aluno tem as colunas "nome", "e-mail", "CPF", "número da prova", "questão 1", "questão 2" e assim por diante
+
 
 @gui
 Scenario: Professor corrige as notas de uma turma com gabarito cadastrado
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And as respostas são "3", "9" e "15" para as questões da prova 01
-    And as respostas são "9", "15" e "3" para as questões da prova 02
-    And cada questão tem 5 alternativas
-    And o aluno "Pedro" marcou a prova 01 com as respostas "3", "3" e "15"
-    And a aluna "Maria" marcou a prova 02 com as respostas "9", "15" e "3"
-    And eu enviei a planilha com os gabaritos com a formatação correta
-    And eu enviei a planilha de respostas com a formatação correta
-    When eu tocar no botão de correção automática
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    And o gabarito da "prova 01" é "3", "9" e "15"
+    And o gabarito da "prova 02" é "9", "15" e "3"
+    And o aluno "Pedro" marcou a "prova 01" com as respostas "3", "3" e "15"
+    And a aluna "Maria" marcou a "prova 02" com as respostas "9", "15" e "3"
+    When eu enviar a planilha com os gabaritos com a formatação correta
+    And eu enviar a planilha de respostas com a formatação correta
+    And solicitar a correção automática
     Then aparecerá uma mensagem informando que as notas foram cadastradas
-    And a nota do aluno "Pedro" constará como 87%
-    And a nota da aluna "Maria" constará como 100%
+    And eu verei "Maria" no rank #1 com a nota 100%
+    And eu verei "Pedro" no rank #2 com a nota 87%
+    
 
 @gui
 Scenario Outline: Professor tenta corrigir notas com planilha de gabarito malformada
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And eu enviei uma planilha de gabaritos com o problema "<problema>"
-    And eu enviei a planilha de respostas com a formatação correta
-    When eu tocar no botão de correção automática
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    When eu enviar uma planilha de gabaritos com o problema "<problema>"
+    And eu enviar a planilha de respostas com a formatação correta
+    And solicitar a correção automática
     Then aparecerá a mensagem de formato inválido
     And nenhuma nota será cadastrada para a turma
 
@@ -45,12 +48,11 @@ Scenario Outline: Professor tenta corrigir notas com planilha de gabarito malfor
 
 @gui
 Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha de respostas possuindo formatação errada
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And as respostas são "3", "9" e "15" para as questões da prova 01
-    And eu enviei a planilha com os gabaritos com a formatação correta
-    And eu enviei a planilha de respostas com o "<problema>"
-    When eu tocar no botão de correção automática
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    And o gabarito da "prova 01" é "3", "9" e "15"
+    When eu enviar a planilha com os gabaritos com a formatação correta
+    And eu enviar a planilha de respostas com o "<problema>"
+    And solicitar a correção automática
     Then aparecerá a mensagem de formato inválido
     And nenhuma nota será cadastrada para a turma
 
@@ -64,10 +66,9 @@ Scenario Outline: Professor tenta corrigir as notas de uma turma com a planilha 
 
 @gui
 Scenario Outline: Professor tenta corrigir sem enviar todas as planilhas necessárias
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
     And o envio de planilhas está na situação "<situação>"
-    When eu tocar no botão de correção automática
+    When solicitar a correção automática
     Then aparecerá uma mensagem solicitando o envio das planilhas
     And nenhuma nota será cadastrada para a turma
 
@@ -79,66 +80,59 @@ Scenario Outline: Professor tenta corrigir sem enviar todas as planilhas necess�
 
 @gui
 Scenario: Professor corrige notas de uma turma e um aluno preenche uma resposta inválida
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And as respostas são "3", "9" e "15" para as questões da prova 01
-    And as respostas são "9", "15" e "3" para as questões da prova 02
-    And cada questão tem 5 alternativas
-    And o aluno "Pedro" marcou a prova 01 com as respostas "3", "B" e "40"
-    And a aluna "Maria" marcou a prova 02 com as respostas "9", "15" e "3"
-    And eu enviei a planilha com os gabaritos com a formatação correta
-    And eu enviei a planilha de respostas com a formatação correta
-    When eu tocar no botão de correção automática
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    And o gabarito da "prova 01" é "3", "9" e "15"
+    And o gabarito da "prova 02" é "9", "15" e "3"
+    And o aluno "Pedro" marcou a "prova 01" com as respostas "3", "B" e "40"
+    And a aluna "Maria" marcou a "prova 02" com as respostas "9", "15" e "3"
+    When eu enviar a planilha com os gabaritos com a formatação correta
+    And eu enviar a planilha de respostas com a formatação correta
+    And solicitar a correção automática
     Then aparecerá uma mensagem informando que as notas foram cadastradas com alertas de respostas inválidas
-    And a nota do aluno "Pedro" constará como 33%
-    And a nota da aluna "Maria" constará como 100%
+    And eu verei "Maria" no rank #1 com a nota 100%
+    And eu verei "Pedro" no rank #2 com a nota 33%
     And o sistema indicará alertas somente para o aluno "Pedro" #eh necessario?
 
 @gui
 Scenario: Professor corrige notas e um aluno entrega a prova em branco
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And as respostas são "3", "9" e "15" para as questões da prova 01
-    And cada questão tem 5 alternativas
-    And a aluna "Ana" entregou a prova 01 com todas as questões em branco
-    And eu enviei a planilha com os gabaritos com a formatação correta
-    And eu enviei a planilha de respostas com a formatação correta
-    When eu tocar no botão de correção automática
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    And o gabarito da "prova 01" é "3", "9" e "15"
+    And a aluna "Ana" entregou a "prova 01" com todas as questões em branco
+    When eu enviar a planilha com os gabaritos com a formatação correta
+    And eu enviar a planilha de respostas com a formatação correta
+    And solicitar a correção automática
     Then aparecerá uma mensagem informando que as notas foram cadastradas
-    And a nota da aluna "Ana" constará como 0%
+    And eu verei "Ana" com a nota 0%
 
 @gui
 Scenario: Professor corrige notas e a planilha contém um aluno que não pertence à turma
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And as respostas são "3", "9" e "15" para as questões da prova 01
-    And cada questão tem 5 alternativas
-    And o aluno "Pedro" marcou a prova 01 com as respostas "3", "3" e "15"
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    And o gabarito da "prova 01" é "3", "9" e "15"
+    And o aluno "Pedro" marcou a "prova 01" com as respostas "3", "3" e "15"
     And a planilha de respostas contém um aluno com identificador que não pertence à turma
-    And eu enviei a planilha com os gabaritos com a formatação correta
-    And eu enviei a planilha de respostas com a formatação correta
-    When eu tocar no botão de correção automática
+    When eu enviar a planilha com os gabaritos com a formatação correta
+    And eu enviar a planilha de respostas com a formatação correta
+    And solicitar a correção automática
     Then aparecerá uma mensagem informando que as notas foram cadastradas com alerta de aluno não encontrado na turma
-    And a nota do aluno "Pedro" constará como 87%
+    And eu verei "Pedro" com a nota 87%
     And nenhuma nota será cadastrada para o aluno que não pertence à turma
 
 @gui
 Scenario: Professor corrige novamente uma turma que já possui notas
-    Given que eu sou o professor "Paulo"
-    And eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
-    And o aluno "Pedro" já possui nota 40% na prova 01
-    And as respostas são "3", "9" e "15" para as questões da prova 01
-    And as respostas são "9", "15" e "3" para as questões da prova 02
-    And cada questão tem 5 alternativas
-    And o aluno "Pedro" marcou a prova 01 com as respostas "3", "B" e "40"
-    And a aluna "Maria" marcou a prova 02 com as respostas "9", "15" e "3"
-    And eu enviei a planilha com os gabaritos com a formatação correta
-    And eu enviei a planilha de respostas com a formatação correta
-    When eu tocar no botão de correção automática
+    Given eu estou na página de notas da turma "Engenharia de Software e Sistemas 2026.2"
+    And o aluno "Pedro" já possui nota 40% na "prova 01"
+    And o gabarito da "prova 01" é "3", "9" e "15"
+    And o gabarito da "prova 02" é "9", "15" e "3"
+    And o aluno "Pedro" marcou a "prova 01" com as respostas "3", "B" e "40"
+    And a aluna "Maria" marcou a "prova 02" com as respostas "9", "15" e "3"
+    When eu enviar a planilha com os gabaritos com a formatação correta
+    And eu enviar a planilha de respostas com a formatação correta
+    And solicitar a correção automática
     Then aparecerá uma mensagem informando que as notas foram cadastradas
-    And a nota do aluno "Pedro" constará como 87%
-    And a nota da aluna "Maria" constará como 100%
-    And o aluno "Pedro" não terá mais de uma nota para a prova 01
+    And eu verei "Maria" no rank #1 com a nota 100%
+    And eu verei "Pedro" no rank #2 com a nota 87%
+    
+    And o aluno "Pedro" não terá mais de uma nota para a "prova 01"
 
 @service
 Scenario Outline: Serviço calcula a nota do aluno a partir do gabarito e das respostas marcadas
@@ -158,7 +152,7 @@ Scenario Outline: Serviço calcula a nota do aluno a partir do gabarito e das re
 
         
     Examples: Casos limites e exceções
-        | aluno | prova | gabarito | respostas       | nota |
-        | Joao  | 01    | 3, 9, 15 | 3, 9, null      | 67%  | # Deixou a última em branco
-        | Ana   | 01    | 3, 9, 15 | null, null, null| 0%   | # Entregou tudo em branco
+        | aluno | prova | gabarito | respostas                   | nota |
+        | Joao  | 01    | 3, 9, 15 | 3, 9, (branco)              | 67%  | # Deixou a última em branco
+        | Ana   | 01    | 3, 9, 15 | (branco), (branco), (branco)| 0%   | # Entregou tudo em branco
 
