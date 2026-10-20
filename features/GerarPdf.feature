@@ -23,7 +23,7 @@ Scenario 1: Gerar os PDFs das provas e seus gabaritos correspondente
 
 
 @gui
-Scenario 8: Garantir a correspondência entre provas e gabaritos
+Scenario 2: Garantir a correspondência entre provas e gabaritos
   Given que eu estou na página "Criação de Provas"
   And eu vejo o campo "Questões Selecionadas" com as questões "A", "B", "C"
   And eu vejo o campo "Tipo de Avaliação" com o dado "Bimestral"
@@ -39,7 +39,7 @@ Scenario 8: Garantir a correspondência entre provas e gabaritos
 
 
 @gui
-Scenario 9: Verificar os dados da avaliação nos PDFs
+Scenario 3: Verificar os dados da avaliação nos PDFs
   Given que eu estou na página "Criação de Provas"
   And eu vejo o campo "Questões Selecionadas" com as questões "A", "B", "C"
   And eu vejo o campo "Tipo de Avaliação" com o dado "Trimestral"
@@ -53,7 +53,7 @@ Scenario 9: Verificar os dados da avaliação nos PDFs
 
 
 @gui
-Scenario 2: Gerar provas com questões em ordem diferente
+Scenario 4: Gerar provas com questões em ordem diferente
   Given que eu estou na página "Criação de Provas"
   And eu vejo o campo "Questões Selecionadas" com as questões "A", "B", "C", "D"
   And eu vejo o campo "Tipo de Avaliação" com o dado "Bimestral"
@@ -66,7 +66,7 @@ Scenario 2: Gerar provas com questões em ordem diferente
 
 
 @gui
-Scenario 2: Exibir "Warning" quando não houver combinações suficientes
+Scenario 5: Exibir "Warning" quando não houver combinações suficientes
   Given que eu estou na página "Criação de Provas"
   And eu vejo o campo "Questões Selecionadas" com as questão "A" de 3 alternativas
   And eu vejo o campo "Tipo de Avaliação" com o dado "Bimestral"
@@ -79,7 +79,7 @@ Scenario 2: Exibir "Warning" quando não houver combinações suficientes
 
 
 @gui
-Scenario 3: Exibir erro quando os dados obrigatórios não forem informados
+Scenario 6: Exibir erro quando os dados obrigatórios não forem informados
   Given que eu estou na página "Criação de Provas"
   And eu vejo o campo "Questões Selecionadas" com as questões "A", "B", "C" 
   And eu vejo o campo "Tipo de Avaliação" vazio
@@ -91,7 +91,7 @@ Scenario 3: Exibir erro quando os dados obrigatórios não forem informados
 
 
 @gui
-Scenario 5: Impedir a geração quando nenhuma questão for selecionada
+Scenario 7: Impedir a geração quando nenhuma questão for selecionada
   Given que eu estou na página "Criação de Provas"
   And o campo "Questões Selecionadas" está vazio
   And eu vejo o campo "Tipo de Avaliação" com o dado "Bimestral"
@@ -106,7 +106,7 @@ Scenario 5: Impedir a geração quando nenhuma questão for selecionada
 
 
 @service
-Scenario: Gerar provas e gabaritos para a quantidade de alunos informada
+Scenario 1: Gerar provas e gabaritos para a quantidade de alunos informada
   Given que existem as questões "A", "B" e "C" selecionadas
   And o tipo de avaliação é "Bimestral"
   And a data da avaliação é "25/12/2026"
@@ -118,7 +118,7 @@ Scenario: Gerar provas e gabaritos para a quantidade de alunos informada
 
 
 @service
-Scenario: Gerar códigos identificadores únicos para as provas
+Scenario 2: Gerar códigos identificadores únicos para as provas
   Given que existem as questões "A", "B" e "C" selecionadas
   And o tipo de avaliação é "Bimestral"
   And a data da avaliação é "25/12/2026"
@@ -130,7 +130,7 @@ Scenario: Gerar códigos identificadores únicos para as provas
 
 
 @service
-Scenario: Gerar provas mesmo com combinações insuficientes
+Scenario 3: Gerar provas mesmo com combinações insuficientes
   Given que existe a questão "A" selecionada com 3 alternativas
   And o tipo de avaliação é "Bimestral"
   And a data da avaliação é "25/12/2026"
@@ -144,7 +144,7 @@ Scenario: Gerar provas mesmo com combinações insuficientes
 
 
 @service
-Scenario: Rejeitar geração com dados obrigatórios ausentes
+Scenario 4: Rejeitar geração com dados obrigatórios ausentes
   Given que existem as questões "A", "B" e "C" selecionadas
   And o tipo de avaliação é "Bimestral"
   And a data da avaliação é "25/12/2026"
@@ -156,7 +156,7 @@ Scenario: Rejeitar geração com dados obrigatórios ausentes
 
 
 @service
-Scenario: Impedir geração parcial quando ocorrer uma falha
+Scenario 5: Impedir geração parcial quando ocorrer uma falha
   Given que existem as questões "A", "B" e "C" selecionadas
   And o tipo de avaliação é "Bimestral"
   And a data da avaliação é "25/12/2026"
@@ -169,7 +169,7 @@ Scenario: Impedir geração parcial quando ocorrer uma falha
 
 
 @service
-Scenario: Impedir geração parcial quando ocorrer uma falha
+Scenario 6: Impedir geração parcial quando ocorrer uma falha
   Given que existem as questões "A", "B" e "C" selecionadas
   And o tipo de avaliação é "Bimestral"
   And a data da avaliação é "25/12/2026"
