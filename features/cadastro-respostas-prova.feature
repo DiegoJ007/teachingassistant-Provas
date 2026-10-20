@@ -1,100 +1,96 @@
 Feature: Cadastro de respostas da prova
-Como um aluno de uma disciplina
-Eu quero registrar minhas respostas durante a realização da prova
-Para que minhas respostas possam ser corrigidas e minha nota seja calculada
+  Como um aluno de uma disciplina
+  Eu quero preencher um formulário informando a avaliação, o número da minha prova e a soma das alternativas corretas de cada questão
+  Para que minhas respostas sejam registradas de acordo com o meu tipo de prova
 
---------------------------------------------------------------------------------------
+  Background:
+    Given eu estou logado como "aluno" com o login "joao"
+    And eu estou na página "Formulário de Respostas"
 
-Scenarios
+  Scenario: Aluno seleciona a avaliação e o número da prova para exibir as questões no formulário
+    Given a avaliação "1ª EE" está disponível com os números de prova "101" e "102" de "3" questões
+    When eu seleciono a avaliação "1ª EE"
+    And eu informo o número da prova "101"
+    Then eu estou na página "Formulário de Respostas"
+    And eu vejo a avaliação "1ª EE" e o número da prova "101" selecionados no formulário
+    And eu vejo os campos de soma para a "Questão 1", a "Questão 2" e a "Questão 3"
 
-Scenario: Aluno inicia a realização da prova
-Given eu estou logado como "aluno"
-And eu estou na página "provas disponíveis"
-And eu vejo uma prova disponível
-When eu seleciono a opção "iniciar prova"
-Then eu vejo a página "prova em andamento"
+  Scenario: Aluno preenche e envia as somas de todas as questões de um tipo de prova com sucesso
+    Given eu selecionei a avaliação "1ª EE" e o número da prova "101" com "3" questões
+    When eu preencho a soma "21" para a "Questão 1"
+    And eu preencho a soma "10" para a "Questão 2"
+    And eu preencho a soma "33" para a "Questão 3"
+    And eu seleciono a opção "Finalizar Prova"
+    And eu seleciono a opção "Confirmar Envio"
+    Then eu vejo a mensagem "Respostas enviadas com sucesso"
+    And eu vejo o comprovante da avaliação "1ª EE" para a prova "101" com as somas "21", "10" e "33" nas questões "Questão 1", "Questão 2" e "Questão 3"
 
-Scenario: Aluno visualiza uma questão da prova
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
-Then eu vejo o enunciado da questão número "1"
-And eu vejo as alternativas disponíveis para a questão
+  Scenario: Aluno altera a soma de uma questão no formulário antes de confirmar o envio
+    Given eu selecionei a avaliação "2ª EE" e o número da prova "202" com "2" questões
+    And eu preenchi a soma "12" para a "Questão 1"
+    And eu preenchi a soma "5" para a "Questão 2"
+    When eu altero a soma da "Questão 1" para "19"
+    Then eu vejo a soma "19" preenchida na "Questão 1"
+    And eu vejo a soma "5" preenchida na "Questão 2"
 
-Scenario: Aluno seleciona uma alternativa
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
-And eu vejo as alternativas disponíveis para a questão
-When eu seleciono a alternativa "A"
-Then eu vejo a alternativa "A" selecionada para a questão número "1"
+  Scenario: Aluno cancela a confirmação de envio e mantém as somas preenchidas
+    Given eu selecionei a avaliação "1ª EE" e o número da prova "101" com "2" questões
+    And eu preenchi a soma "21" para a "Questão 1"
+    And eu preenchi a soma "10" para a "Questão 2"
+    When eu seleciono a opção "Finalizar Prova"
+    And eu seleciono a opção "Cancelar Envio"
+    Then eu permaneço na página "Formulário de Respostas"
+    And eu vejo a soma "21" preenchida na "Questão 1"
+    And eu vejo a soma "10" preenchida na "Questão 2"
 
-Scenario: Aluno altera sua resposta
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
-And eu vejo a alternativa "A" selecionada
-When eu seleciono a alternativa "C"
-Then eu vejo a alternativa "C" selecionada para a questão número "1"
-And eu não vejo a alternativa "A" selecionada para a questão número "1"
+  Scenario: Sistema mantém separadas as respostas de avaliações diferentes
+    Given eu já enviei o formulário da avaliação "1ª EE" para o número da prova "101" com a soma "21" na "Questão 1"
+    When eu seleciono a avaliação "2ª EE"
+    And eu informo o número da prova "202"
+    And eu preencho a soma "36" para a "Questão 1"
+    And eu seleciono a opção "Finalizar Prova"
+    And eu seleciono a opção "Confirmar Envio"
+    Then eu vejo a mensagem "Respostas enviadas com sucesso"
+    And eu vejo o comprovante da avaliação "2ª EE" para a prova "202" com a soma "36" na "Questão 1"
+    And o comprovante da avaliação "1ª EE" para a prova "101" mantém a soma "21" na "Questão 1"
 
-Scenario: Aluno navega para outra questão
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
-When eu seleciono a opção "próxima questão"
-Then eu vejo a questão número "2"
+  Scenario: Aluno envia o formulário deixando uma questão sem soma preenchida
+    Given eu selecionei a avaliação "1ª EE" e o número da prova "101" com "3" questões
+    When eu preencho a soma "21" para a "Questão 1"
+    And eu deixo a "Questão 2" sem soma preenchida
+    And eu preencho a soma "33" para a "Questão 3"
+    And eu seleciono a opção "Finalizar Prova"
+    And eu seleciono a opção "Confirmar Envio"
+    Then eu vejo a mensagem "Respostas enviadas com sucesso"
+    And eu vejo o comprovante da avaliação "1ª EE" para a prova "101" com as somas "21", "0" e "33" nas questões "Questão 1", "Questão 2" e "Questão 3"
 
-Scenario: Aluno retorna para uma questão anterior
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "11"
-When eu seleciono a opção "questão anterior"
-Then eu vejo a questão número "10"
-And eu vejo a resposta anteriormente selecionada para a questão número "1"
+  Scenario Outline: Aluno envia somas nos valores limítrofes válidos de 0 e 63 (Caso Limítrofe)
+    Given eu selecionei a avaliação "1ª EE" e o número da prova "101" com "1" questões
+    When eu preencho a soma "<soma>" para a "Questão 1"
+    And eu seleciono a opção "Finalizar Prova"
+    And eu seleciono a opção "Confirmar Envio"
+    Then eu vejo a mensagem "Respostas enviadas com sucesso"
+    And eu vejo o comprovante da avaliação "1ª EE" para a prova "101" com a soma "<soma>" na "Questão 1"
 
-Scenario: Aluno deixa uma questão sem resposta
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "11"
-And nenhuma alternativa está selecionada
-When eu seleciono a opção "próxima questão"
-Then eu vejo a questão número "12"
-And a questão número "11" permanece sem resposta
+  Scenario: Aluno tenta enviar o formulário sem informar o número da prova (Caso de Falha)
+    Given a avaliação "1ª EE" está disponível com os números de prova "101" e "102"
+    When eu seleciono a avaliação "1ª EE"
+    And eu não informo o número da prova
+    And eu seleciono a opção "Finalizar Prova"
+    Then eu vejo uma mensagem de erro informando que o número da prova é obrigatório
+    And eu permaneço na página "Formulário de Respostas"
 
-Scenario: Aluno finaliza a prova
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo todas as questões da prova respondidas ou não respondidas
-When eu seleciono a opção "finalizar prova"
-Then eu vejo uma mensagem de confirmação para finalizar a prova
-And eu vejo a opção "confirmar envio"
+  Scenario: Aluno tenta informar um número de prova inexistente para a avaliação selecionada (Caso de Falha)
+    Given a avaliação "1ª EE" possui apenas os números de prova "101" e "102" cadastrados
+    When eu seleciono a avaliação "1ª EE"
+    And eu informo o número da prova "999"
+    Then eu vejo uma mensagem de erro informando que o número da prova "999" não é válido para a avaliação "1ª EE"
+    And eu permaneço na página "Formulário de Respostas"
 
-Scenario: Aluno confirma o envio da prova
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a mensagem de confirmação para finalizar a prova
-When eu seleciono a opção "confirmar envio"
-Then eu vejo a mensagem "prova enviada com sucesso"
-And minhas respostas são registradas no sistema
-
-Scenario: Aluno envia uma prova com questão sem resposta
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo uma ou mais questões sem resposta
-When eu seleciono a opção "confirmar envio"
-Then eu vejo a mensagem "prova enviada com sucesso"
-Then as questões sem resposta são registradas como incorretas para a correção
-<<<<<<< HEAD
-=======
-
-Scenario: Sistema mantém respostas de diferentes questões separadas
-Given eu estou logado como "aluno"
-And eu estou na página "prova em andamento"
-And eu vejo a questão número "1"
-When eu seleciono a alternativa "A"
-And eu navego para a questão número "2"
-And eu seleciono a alternativa "C"
-Then eu vejo a alternativa "A" registrada para a questão número "1"
-And eu vejo a alternativa "C" registrada para a questão número "2"
->>>>>>> dev
+  Scenario Outline: Aluno tenta preencher uma soma fora do intervalo de 0 a 63 (Caso de Falha)
+    Given eu selecionei a avaliação "1ª EE" e o número da prova "101" com "2" questões
+    When eu preencho a soma "<soma>" para a "Questão 1"
+    And eu preencho a soma "10" para a "Questão 2"
+    And eu seleciono a opção "Finalizar Prova"
+    Then eu vejo uma mensagem de erro informando que a soma da "Questão 1" deve ser um valor entre "0" e "63"
+    And eu permaneço na página "Formulário de Respostas"
